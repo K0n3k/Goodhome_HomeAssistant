@@ -4,7 +4,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.1+-brightgreen.svg)
 
-Intégration Home Assistant complète pour les thermostats connectés **GoodHome** (marque Kingfisher - Castorama/Brico Dépôt).
+Intégration Home Assistant complète pour les radiateurs connectés **GoodHome** (marque Kingfisher - Castorama/Brico Dépôt).
 
 ## 📋 Fonctionnalités
 
@@ -25,6 +25,10 @@ Intégration Home Assistant complète pour les thermostats connectés **GoodHome
 - ⚙️ Configuration via interface utilisateur (config flow)
 
 ## 📦 Installation
+
+### Pré-requis
+
+⚠️ **Important** : Avant d'installer cette intégration, votre radiateur GoodHome doit être connecté au cloud GoodHome. Cette opération se fait depuis l'application mobile officielle **GoodHome** (disponible sur Android et iOS).
 
 ### Via HACS (recommandé)
 
@@ -106,7 +110,7 @@ Pour chaque thermostat GoodHome, les entités suivantes sont créées :
 
 ## 🎯 Modes targetMode
 
-L'entité `select.xxx_target_mode` permet de contrôler finement le comportement du thermostat avec les 12 modes disponibles :
+L'entité `select.xxx_target_mode` permet de contrôler finement le comportement du radiateur avec les 12 modes disponibles :
 
 | Mode | Valeur | Description |
 |------|--------|-------------|
@@ -181,7 +185,7 @@ sensor:
 
 ### Les modifications ne sont pas prises en compte
 - L'intégration utilise un système optimiste avec polling de confirmation (40 secondes max)
-- Vérifiez la connectivité de vos thermostats
+- Vérifiez la connectivité de vos radiateurs
 
 ## 📝 Logs
 
