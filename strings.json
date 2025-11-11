@@ -1,0 +1,31 @@
+{
+  "title": "GoodHome",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure GoodHome",
+        "description": "Enter your GoodHome credentials",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to GoodHome",
+      "invalid_auth": "Invalid credentials",
+      "unknown": "Unknown error"
+    },
+    "abort": {
+      "already_configured": "This GoodHome account is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "GoodHome Options",
+        "description": "Configure integration options"
+      }
+    }
+  }
+}

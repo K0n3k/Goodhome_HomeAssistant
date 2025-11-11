@@ -1,0 +1,11 @@
+{
+  "domain": "goodhome",
+  "name": "GoodHome",
+  "documentation": "https://github.com/K0n3k/Goodhome_HomeAssistant",
+  "issue_tracker": "https://github.com/K0n3k/Goodhome_HomeAssistant/issues",
+  "codeowners": ["@K0n3k"],
+  "requirements": ["requests>=2.31.0"],
+  "iot_class": "cloud_polling",
+  "version": "1.0.0",
+  "config_flow": true
+}

@@ -1,0 +1,15 @@
+.git/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv
+venv/
+ENV/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

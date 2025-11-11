@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure GoodHome",
+        "description": "Enter your GoodHome credentials",
+        "data": {
+          "email": "Email",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to GoodHome",
+      "invalid_auth": "Invalid credentials",
+      "unknown": "Unknown error"
+    },
+    "abort": {
+      "already_configured": "This GoodHome account is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "GoodHome Options",
+        "description": "Configure integration options"
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "target_mode": {
+        "state": {
+          "default": "Default (temporary)",
+          "manual_comfort": "Manual Comfort",
+          "manual_eco": "Manual Eco",
+          "manual_frost": "Manual Frost Protection",
+          "long_absence": "Long Absence",
+          "override": "Manual Override",
+          "forced_comfort": "Forced Comfort",
+          "forced_eco": "Forced Eco",
+          "short_absence": "Short Absence",
+          "auto_comfort": "Auto Comfort",
+          "auto_eco": "Auto Eco",
+          "manual": "Manual"
+        }
+      }
+    }
+  }
+}

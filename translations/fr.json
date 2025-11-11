@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurer GoodHome",
+        "description": "Entrez vos identifiants GoodHome",
+        "data": {
+          "email": "Email",
+          "password": "Mot de passe"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de se connecter à GoodHome",
+      "invalid_auth": "Identifiants invalides",
+      "unknown": "Erreur inconnue"
+    },
+    "abort": {
+      "already_configured": "Ce compte GoodHome est déjà configuré"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options GoodHome",
+        "description": "Configurer les options de l'intégration"
+      }
+    }
+  },
+  "entity": {
+    "select": {
+      "target_mode": {
+        "state": {
+          "default": "Par défaut (provisoire)",
+          "manual_comfort": "Manuel Confort",
+          "manual_eco": "Manuel Éco",
+          "manual_frost": "Manuel Hors-gel",
+          "long_absence": "Absence longue",
+          "override": "Manuel Override",
+          "forced_comfort": "Forcé Confort",
+          "forced_eco": "Forcé Éco",
+          "short_absence": "Absence courte",
+          "auto_comfort": "Auto Confort",
+          "auto_eco": "Auto Éco",
+          "manual": "Manuel"
+        }
+      }
+    }
+  }
+}
