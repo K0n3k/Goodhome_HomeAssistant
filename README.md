@@ -196,7 +196,7 @@ sensor:
     name: "Chauffage XXX Energy"
     unit_prefix: k
     round: 2
-    method: left  # Utilise la méthode "left" (somme de Riemann à gauche) pour l'intégration
+    method: trapezoidal  # Utilise la méthode "trapezoidal" (moyenne début/fin d'intervalle) pour une intégration plus précise
 ```
 
 Ce sensor peut ensuite être ajouté au **tableau de bord énergie** de Home Assistant.
