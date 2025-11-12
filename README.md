@@ -9,11 +9,12 @@ Intégration Home Assistant complète pour les radiateurs connectés **GoodHome*
 ## 📋 Fonctionnalités
 
 ### Plateformes supportées
-- ✅ **Climate** - Contrôle complet du thermostat
-- ✅ **Sensor** - Température, humidité, duty cycle, etc.
+- ✅ **Climate** - Contrôle complet du thermostat avec attribut `eco_reason`
+- ✅ **Sensor** - Température, humidité, puissance, consommation, jours d'apprentissage
 - ✅ **Binary Sensor** - Connectivité, problèmes, auto-apprentissage
 - ✅ **Switch** - Détection fenêtre ouverte, présence, auto-apprentissage, mode manuel
-- ✅ **Select** - Sélection des modes targetMode (12 modes disponibles)
+- ✅ **Select** - Sélection des modes targetMode (13 modes disponibles)
+- ✅ **Number** - Réglage des températures confort, éco et hors-gel
 
 ### Caractéristiques principales
 - 🔐 Authentification par email/password avec refresh token automatique
@@ -21,8 +22,11 @@ Intégration Home Assistant complète pour les radiateurs connectés **GoodHome*
 - 🔄 État optimiste avec polling de confirmation (40s max)
 - 🌐 Support complet de l'API GoodHome officielle
 - 🎯 100% compatible avec le projet ESPHome_GoodHome
-- 🇫🇷 Interface en français
+- 🇫🇷🇬🇧 Interface multilingue (français et anglais)
 - ⚙️ Configuration via interface utilisateur (config flow)
+- 📊 Calcul automatique de la consommation électrique
+- 🎓 Suivi de la période d'apprentissage (14 jours)
+- 🏠 Détection automatique d'absence avec mode éco
 
 ## 📦 Installation
 
@@ -79,14 +83,23 @@ Pour chaque thermostat GoodHome, les entités suivantes sont créées :
   - Température cible
   - Modes HVAC (Heat, Off)
   - Presets (Confort, Éco, Manuel, Absence)
+  - Attributs étendus :
+    - `eco_reason` : `manual` / `absence` / `schedule` / `null`
+    - `self_learning_days` : Progression de l'apprentissage (0-14)
+    - `temperature_range` : `cold` / `medium` / `hot`
+    - `temperature_color` : Code couleur pour l'interface
 
 ### Sensors
 - `sensor.xxx_temperature` - Température actuelle
+- `sensor.xxx_target_temperature` - Température cible
 - `sensor.xxx_humidity` - Humidité
 - `sensor.xxx_duty_cycle` - Cycle de chauffe (%)
-- `sensor.xxx_comfort_temperature` - Température confort
-- `sensor.xxx_eco_temperature` - Température éco
-- `sensor.xxx_target_temperature` - Température cible
+- `sensor.xxx_power_consumption` - Consommation électrique calculée (W)
+- `sensor.xxx_comfort_temp` - Température confort
+- `sensor.xxx_eco_temp` - Température éco
+- `sensor.xxx_antifreeze_temp` - Température hors-gel
+- `sensor.xxx_self_learning_days` - Jours d'apprentissage (0-14)
+- `sensor.xxx_device_info` - Informations appareil (diagnostic)
 
 ### Binary Sensors
 - `binary_sensor.xxx_connectivity` - État de connexion
@@ -102,15 +115,21 @@ Pour chaque thermostat GoodHome, les entités suivantes sont créées :
 ### Select
 - `select.xxx_target_mode` - Sélection du mode de fonctionnement
   - Par défaut (provisoire)
-  - Manuel Confort / Éco / Hors-gel
+  - Manuel Confort / Éco / Hors-gel / Manuel
   - Override
   - Forcé Confort / Éco
+  - **Éco auto (absence)** - Nouveau mode 30
   - Auto Confort / Éco
   - Absence courte / longue
 
+### Number
+- `number.xxx_comfort_temperature` - Température confort (7-30°C, pas de 0.5°C)
+- `number.xxx_eco_temperature` - Température éco (7-30°C, pas de 0.5°C)
+- `number.xxx_antifreeze_temperature` - Température hors-gel (7-30°C, pas de 0.5°C)
+
 ## 🎯 Modes targetMode
 
-L'entité `select.xxx_target_mode` permet de contrôler finement le comportement du radiateur avec les 12 modes disponibles :
+L'entité `select.xxx_target_mode` permet de contrôler finement le comportement du radiateur avec les 13 modes disponibles :
 
 | Mode | Valeur | Description |
 |------|--------|-------------|
@@ -123,9 +142,20 @@ L'entité `select.xxx_target_mode` permet de contrôler finement le comportement
 | Forcé Confort | 9 | Forcé confort avec retour auto |
 | Forcé Éco | 10 | Forcé éco avec retour auto |
 | Absence courte | 12 | Absence courte (overrideTime) |
+| **Éco auto (absence)** | **30** | **Éco automatique après 20+ min sans présence** |
 | Auto Confort | 60 | Mode auto période présence |
 | Auto Éco | 61 | Mode auto période absence |
 | Manuel | 70 | Mode manuel (mise à jour récente) |
+
+### 🆕 Mode 30 - Détection d'absence automatique
+
+Le **mode 30** est un mode spécial qui se déclenche automatiquement :
+- 📡 Le radiateur détecte l'absence de présence pendant plus de 20 minutes
+- 🌡️ Il passe automatiquement en température éco pour économiser l'énergie
+- ↩️ Retour automatique au mode normal dès détection de présence
+- 📊 Visible dans l'attribut `eco_reason` du climate : `"absence"`
+
+**Note** : Ce mode n'est pas sélectionnable manuellement, il est géré par le radiateur lui-même.
 
 ## 🔌 Compatibilité API
 
@@ -147,30 +177,29 @@ Grâce au cache HTTP 304 Not Modified :
 
 ## 🔧 Suivi d'énergie
 
-Pour suivre la consommation de vos radiateurs GoodHome (ex: DLRIRFH1800 - 1800W) :
+La consommation électrique est maintenant **calculée automatiquement** par le sensor `sensor.xxx_power_consumption` !
 
-```yaml
-template:
-  - sensor:
-    - name: "Chauffage Salon Power"
-      unique_id: chauffage_salon_power
-      unit_of_measurement: "W"
-      device_class: power
-      state_class: measurement
-      state: >
-        {% set duty = states('sensor.xxx_duty_cycle') | float(0) %}
-        {{ (duty * 1800 / 100) | round(0) }}
-```
+Le calcul utilise :
+- Le **duty_cycle** (pourcentage de chauffe actif)
+- La **puissance nominale** extraite du modèle (ex: DLRIRFH1800 = 1800W)
 
-Puis ajoutez dans `configuration.yaml` :
+Formule : `Consommation (W) = (duty_cycle / 100) × puissance_nominale`
+
+### Intégration dans le tableau de bord énergie
+
+Pour suivre l'énergie consommée, créez un sensor d'intégration dans `configuration.yaml` :
+
 ```yaml
 sensor:
   - platform: integration
-    source: sensor.chauffage_salon_power
-    name: "Chauffage Salon Energy"
+    source: sensor.xxx_power_consumption
+    name: "Chauffage XXX Energy"
     unit_prefix: k
     round: 2
+    method: left
 ```
+
+Ce sensor peut ensuite être ajouté au **tableau de bord énergie** de Home Assistant.
 
 ## 🐛 Dépannage
 
