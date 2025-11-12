@@ -27,5 +27,85 @@
         "description": "Configure integration options"
       }
     }
+  },
+  "entity": {
+    "sensor": {
+      "current_temp": {
+        "name": "Current temperature"
+      },
+      "target_temp": {
+        "name": "Target temperature"
+      },
+      "humidity": {
+        "name": "Humidity"
+      },
+      "comfort_temp": {
+        "name": "Comfort temperature"
+      },
+      "eco_temp": {
+        "name": "Eco temperature"
+      },
+      "antifreeze_temp": {
+        "name": "Antifreeze temperature"
+      },
+      "duty_cycle": {
+        "name": "Heating power"
+      },
+      "power_consumption": {
+        "name": "Power consumption"
+      },
+      "device_info": {
+        "name": "Device information"
+      }
+    },
+    "binary_sensor": {
+      "heating": {
+        "name": "Heating"
+      }
+    },
+    "switch": {
+      "occupancy_status": {
+        "name": "Presence sensor"
+      },
+      "window": {
+        "name": "Open window detection"
+      },
+      "self_learning": {
+        "name": "Self learning"
+      },
+      "manual_mode": {
+        "name": "Manual mode"
+      }
+    },
+    "select": {
+      "target_mode": {
+        "name": "Target mode",
+        "state": {
+          "default": "Default (temporary)",
+          "manual_comfort": "Manual Comfort",
+          "manual_eco": "Manual Eco",
+          "manual_frost": "Manual Frost Protection",
+          "long_absence": "Long Absence",
+          "override": "Manual Override",
+          "forced_comfort": "Forced Comfort",
+          "forced_eco": "Forced Eco",
+          "short_absence": "Short Absence",
+          "auto_comfort": "Auto Comfort",
+          "auto_eco": "Auto Eco",
+          "manual": "Manual"
+        }
+      }
+    },
+    "number": {
+      "comfort_temperature": {
+        "name": "Comfort temperature"
+      },
+      "eco_temperature": {
+        "name": "Eco temperature"
+      },
+      "antifreeze_temperature": {
+        "name": "Antifreeze temperature"
+      }
+    }
   }
 }

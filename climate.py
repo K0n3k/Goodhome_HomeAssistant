@@ -208,6 +208,16 @@ class GoodHomeClimate(CoordinatorEntity, ClimateEntity):
                 temp_range = "hot"  # Rouge/Orange
                 temp_color = "#FF5722"
             
+            # Déterminer la raison du mode éco
+            target_mode = state.get("targetMode", 0)
+            eco_reason = None
+            if target_mode == 2:
+                eco_reason = "manual"  # Éco manuel
+            elif target_mode == 30:
+                eco_reason = "absence"  # Éco automatique après 20+ min sans présence
+            elif target_mode == 61:
+                eco_reason = "schedule"  # Éco selon planning auto
+            
             return {
                 "humidity": state.get("humidity"),
                 "window_open": state.get("window", False),
@@ -221,6 +231,7 @@ class GoodHomeClimate(CoordinatorEntity, ClimateEntity):
                 "self_learning": state.get("selfLearning"),
                 "self_learning_improve": state.get("selfLearningImprove"),
                 "self_learning_days": state.get("selfLearningCountDay"),
+                "eco_reason": eco_reason,  # Raison du mode éco (manual/absence/schedule)
                 "firmware_version": state.get("fwVer"),
                 "hardware_version": state.get("HwVer"),
                 "code_name": state.get("codeName"),

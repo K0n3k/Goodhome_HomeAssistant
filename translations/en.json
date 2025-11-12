@@ -28,8 +28,65 @@
     }
   },
   "entity": {
+    "sensor": {
+      "current_temp": {
+        "name": "Current Temperature"
+      },
+      "target_temp": {
+        "name": "Target Temperature"
+      },
+      "humidity": {
+        "name": "Humidity"
+      },
+      "comfort_temp": {
+        "name": "Comfort Temperature"
+      },
+      "eco_temp": {
+        "name": "Eco Temperature"
+      },
+      "antifreeze_temp": {
+        "name": "Antifreeze Temperature"
+      },
+      "duty_cycle": {
+        "name": "Heating Power"
+      },
+      "power_consumption": {
+        "name": "Power Consumption"
+      },
+      "device_info": {
+        "name": "Device Information"
+      },
+      "self_learning_days": {
+        "name": "Auto-Learning Days",
+        "state_attributes": {
+          "description": {
+            "name": "Learning period: 14 days"
+          }
+        }
+      }
+    },
+    "binary_sensor": {
+      "heating": {
+        "name": "Heating"
+      }
+    },
+    "switch": {
+      "occupancy_status": {
+        "name": "Presence Sensor"
+      },
+      "window": {
+        "name": "Open Window Detection"
+      },
+      "self_learning": {
+        "name": "Self Learning"
+      },
+      "manual_mode": {
+        "name": "Manual Mode"
+      }
+    },
     "select": {
       "target_mode": {
+        "name": "Target Mode",
         "state": {
           "default": "Default (temporary)",
           "manual_comfort": "Manual Comfort",
@@ -40,10 +97,22 @@
           "forced_comfort": "Forced Comfort",
           "forced_eco": "Forced Eco",
           "short_absence": "Short Absence",
+          "eco_auto_absence": "Eco Auto (no presence)",
           "auto_comfort": "Auto Comfort",
           "auto_eco": "Auto Eco",
           "manual": "Manual"
         }
+      }
+    },
+    "number": {
+      "comfort_temperature": {
+        "name": "Comfort Temperature"
+      },
+      "eco_temperature": {
+        "name": "Eco Temperature"
+      },
+      "antifreeze_temperature": {
+        "name": "Antifreeze Temperature"
       }
     }
   }

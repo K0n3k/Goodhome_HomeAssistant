@@ -14,7 +14,7 @@ from .goodhome_api import GoodHomeAPI
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "goodhome"
-PLATFORMS = [Platform.CLIMATE, Platform.SENSOR, Platform.BINARY_SENSOR, Platform.SWITCH, Platform.SELECT]
+PLATFORMS = [Platform.CLIMATE, Platform.SENSOR, Platform.BINARY_SENSOR, Platform.SWITCH, Platform.SELECT, Platform.NUMBER]
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up the GoodHome component from yaml configuration."""

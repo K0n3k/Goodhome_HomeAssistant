@@ -95,13 +95,14 @@ async def async_setup_entry(hass, entry, async_add_entities):
 class GoodHomeBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Representation of a GoodHome Binary Sensor."""
     
-    def __init__(self, coordinator, device, sensor_type, sensor_name, device_class):
+    def __init__(self, coordinator, device, sensor_type, translation_key, device_class):
         """Initialize the binary sensor."""
         super().__init__(coordinator)
         self._device_id = device["id"]
         self._device_name = device["name"]
         self._sensor_type = sensor_type
-        self._attr_name = f"{device['name']} {sensor_name}"
+        self._attr_translation_key = translation_key
+        self._attr_has_entity_name = True
         self._attr_unique_id = f"goodhome_{device['id']}_{sensor_type}"
         self._attr_device_class = device_class
         

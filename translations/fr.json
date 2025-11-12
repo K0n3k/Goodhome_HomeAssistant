@@ -28,8 +28,65 @@
     }
   },
   "entity": {
+    "sensor": {
+      "current_temp": {
+        "name": "Température actuelle"
+      },
+      "target_temp": {
+        "name": "Température cible"
+      },
+      "humidity": {
+        "name": "Humidité"
+      },
+      "comfort_temp": {
+        "name": "Température Confort"
+      },
+      "eco_temp": {
+        "name": "Température Éco"
+      },
+      "antifreeze_temp": {
+        "name": "Température Hors-gel"
+      },
+      "duty_cycle": {
+        "name": "Puissance de chauffe"
+      },
+      "power_consumption": {
+        "name": "Consommation"
+      },
+      "device_info": {
+        "name": "Informations appareil"
+      },
+      "self_learning_days": {
+        "name": "Jours d'apprentissage",
+        "state_attributes": {
+          "description": {
+            "name": "Période d'apprentissage : 14 jours"
+          }
+        }
+      }
+    },
+    "binary_sensor": {
+      "heating": {
+        "name": "Chauffage"
+      }
+    },
+    "switch": {
+      "occupancy_status": {
+        "name": "Détection de présence"
+      },
+      "window": {
+        "name": "Détection fenêtre ouverte"
+      },
+      "self_learning": {
+        "name": "Apprentissage automatique"
+      },
+      "manual_mode": {
+        "name": "Mode manuel"
+      }
+    },
     "select": {
       "target_mode": {
+        "name": "Préréglage",
         "state": {
           "default": "Par défaut (provisoire)",
           "manual_comfort": "Manuel Confort",
@@ -40,10 +97,22 @@
           "forced_comfort": "Forcé Confort",
           "forced_eco": "Forcé Éco",
           "short_absence": "Absence courte",
+          "eco_auto_absence": "Éco auto (absence)",
           "auto_comfort": "Auto Confort",
           "auto_eco": "Auto Éco",
           "manual": "Manuel"
         }
+      }
+    },
+    "number": {
+      "comfort_temperature": {
+        "name": "Température Confort"
+      },
+      "eco_temperature": {
+        "name": "Température Éco"
+      },
+      "antifreeze_temperature": {
+        "name": "Température Hors-gel"
       }
     }
   }

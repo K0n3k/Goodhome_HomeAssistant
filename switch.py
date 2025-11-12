@@ -26,7 +26,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 api,
                 device,
                 "window",
-                "Open Window Detection",
+                "window",
                 "mdi:window-open-variant",
             )
         )
@@ -37,7 +37,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 api,
                 device,
                 "occupancyStatus",
-                "Presence Sensor",
+                "occupancy_status",
                 "mdi:account-check",
             )
         )
@@ -48,7 +48,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 api,
                 device,
                 "selfLearning",
-                "Self Learning",
+                "self_learning",
                 "mdi:school",
             )
         )
@@ -59,7 +59,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 api,
                 device,
                 "noprog",
-                "Manual Mode",
+                "manual_mode",
                 "mdi:hand-back-right",
             )
         )
@@ -82,7 +82,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 api,
                 device,
                 "window",
-                "Open Window Detection",
+                "window",
                 "mdi:window-open-variant",
             )
         )
@@ -93,7 +93,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 api,
                 device,
                 "occupancyStatus",
-                "Presence Sensor",
+                "occupancy_status",
                 "mdi:account-check",
             )
         )
@@ -104,7 +104,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 api,
                 device,
                 "selfLearning",
-                "Self Learning",
+                "self_learning",
                 "mdi:school",
             )
         )
@@ -115,7 +115,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 api,
                 device,
                 "noprog",
-                "Manual Mode",
+                "manual_mode",
                 "mdi:hand-back-right",
             )
         )
@@ -125,14 +125,15 @@ async def async_setup_entry(hass, entry, async_add_entities):
 class GoodHomeSwitch(CoordinatorEntity, SwitchEntity):
     """Representation of a GoodHome Switch."""
     
-    def __init__(self, coordinator, api, device, parameter_name, switch_name, icon):
+    def __init__(self, coordinator, api, device, parameter_name, translation_key, icon):
         """Initialize the switch."""
         super().__init__(coordinator)
         self._api = api
         self._device_id = device["id"]
         self._device_name = device["name"]
         self._parameter_name = parameter_name
-        self._attr_name = f"{device['name']} {switch_name}"
+        self._attr_translation_key = translation_key
+        self._attr_has_entity_name = True
         self._attr_unique_id = f"goodhome_{device['id']}_{parameter_name}"
         self._attr_icon = icon
         # Pas de assumed_state pour avoir un vrai toggle comme Hue

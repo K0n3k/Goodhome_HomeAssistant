@@ -495,3 +495,46 @@ class GoodHomeAPI:
         except Exception as e:
             _LOGGER.error(f"Error setting parameter {parameter_name}: {e}")
             return False
+    
+    def set_temperature(self, device_id, temp_type, temperature):
+        """Set a temperature setpoint (comfTemp, ecoTemp, antifTemp)."""
+        try:
+            if not self._connect_socket():
+                return False
+            
+            url = f"{BASE_URL}/v1/devices/{device_id}/state"
+            headers = self._get_headers()
+            headers["content-type"] = "application/json"
+            
+            # L'API attend des températures en float avec 1 décimale
+            data = {
+                "parameters": {
+                    temp_type: round(float(temperature), 1)
+                }
+            }
+            
+            response = requests.patch(url, headers=headers, json=data, timeout=10)
+            
+            # Invalider le cache après modification
+            self._invalidate_cache(device_id)
+            
+            # Si 401, rafraîchir le token et réessayer
+            if response.status_code == 401:
+                _LOGGER.warning("Received 401, refreshing token...")
+                if self.refresh_access_token():
+                    if not self._connect_socket():
+                        return False
+                    headers = self._get_headers()
+                    headers["content-type"] = "application/json"
+                    response = requests.patch(url, headers=headers, json=data, timeout=10)
+                else:
+                    return False
+            
+            response.raise_for_status()
+            
+            _LOGGER.info(f"Set temperature {temp_type}={temperature}°C for device {device_id}")
+            return True
+            
+        except Exception as e:
+            _LOGGER.error(f"Error setting temperature {temp_type}: {e}")
+            return False

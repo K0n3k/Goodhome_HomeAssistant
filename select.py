@@ -20,6 +20,7 @@ TARGET_MODES = {
     "Forcé Confort": 9,         # Forcé confort (retour auto)
     "Forcé Éco": 10,            # Forcé éco (retour auto)
     "Absence courte": 12,       # Absence de courte durée (overrideTime)
+    "Éco auto (absence)": 30,   # Éco automatique après détection d'absence (20+ min)
     "Auto Confort": 60,         # Mode auto, période de présence
     "Auto Éco": 61,             # Mode auto, période d'absence
     "Manuel": 70,               # Manuel (mise à jour récente)
@@ -38,6 +39,7 @@ TARGET_MODE_OPTIONS = [
     "Override",
     "Forcé Confort",
     "Forcé Éco",
+    "Éco auto (absence)",
     "Auto Confort",
     "Auto Éco",
     "Absence courte",
@@ -77,7 +79,8 @@ class GoodHomeTargetModeSelect(CoordinatorEntity, SelectEntity):
     """Representation of a GoodHome Target Mode Select."""
     
     _attr_icon = "mdi:target"
-    _attr_has_entity_name = False
+    _attr_has_entity_name = True
+    _attr_translation_key = "target_mode"
     
     def __init__(self, coordinator, api, device):
         """Initialize the select entity."""
@@ -85,7 +88,6 @@ class GoodHomeTargetModeSelect(CoordinatorEntity, SelectEntity):
         self._api = api
         self._device_id = device["id"]
         self._device_name = device["name"]
-        self._attr_name = f"{device['name']} Target Mode"
         self._attr_unique_id = f"goodhome_target_mode_{device['id']}"
         self._attr_options = TARGET_MODE_OPTIONS
         self._optimistic_state = None
