@@ -115,7 +115,7 @@ Pour chaque thermostat GoodHome, les entités suivantes sont créées :
 ### Select
 - `select.xxx_target_mode` - Sélection du mode de fonctionnement
   - Par défaut (provisoire)
-  - Manuel Confort / Éco / Hors-gel / Manuel
+  - Manuel Confort / Éco / Hors-gel
   - Override
   - Forcé Confort / Éco
   - **Éco auto (absence)** - Nouveau mode 30
@@ -123,9 +123,9 @@ Pour chaque thermostat GoodHome, les entités suivantes sont créées :
   - Absence courte / longue
 
 ### Number
-- `number.xxx_comfort_temperature` - Température confort (7-30°C, pas de 0.5°C)
-- `number.xxx_eco_temperature` - Température éco (7-30°C, pas de 0.5°C)
-- `number.xxx_antifreeze_temperature` - Température hors-gel (7-30°C, pas de 0.5°C)
+- `number.xxx_comfort_temperature` - Température confort (7-30°C, pas de 0,5 °C)
+- `number.xxx_eco_temperature` - Température éco (7-30°C, pas de 0,5 °C)
+- `number.xxx_antifreeze_temperature` - Température hors-gel (7-30°C, pas de 0,5 °C)
 
 ## 🎯 Modes targetMode
 
@@ -142,7 +142,7 @@ L'entité `select.xxx_target_mode` permet de contrôler finement le comportement
 | Forcé Confort | 9 | Forcé confort avec retour auto |
 | Forcé Éco | 10 | Forcé éco avec retour auto |
 | Absence courte | 12 | Absence courte (overrideTime) |
-| **Éco auto (absence)** | **30** | **Éco automatique après 20+ min sans présence** |
+| **Éco auto (absence)** | **30** | **Éco automatique après plus de 20 minutes sans présence** |
 | Auto Confort | 60 | Mode auto période présence |
 | Auto Éco | 61 | Mode auto période absence |
 | Manuel | 70 | Mode manuel (mise à jour récente) |
@@ -196,7 +196,7 @@ sensor:
     name: "Chauffage XXX Energy"
     unit_prefix: k
     round: 2
-    method: left
+    method: left  # Utilise la méthode "left" (somme de Riemann à gauche) pour l'intégration
 ```
 
 Ce sensor peut ensuite être ajouté au **tableau de bord énergie** de Home Assistant.
