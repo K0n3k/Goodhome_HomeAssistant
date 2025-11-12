@@ -13,3 +13,4 @@ ENV/
 *.swo
 *~
 .DS_Store
+sync_to_ha.sh
