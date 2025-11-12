@@ -92,6 +92,18 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
                 SensorStateClass.MEASUREMENT,
             )
         )
+        # Device Info sensor (diagnostic)
+        entities.append(
+            GoodHomeSensor(
+                coordinator,
+                device,
+                "device_info",
+                "Device Info",
+                None,
+                None,
+                None,
+            )
+        )
     
     async_add_entities(entities, True)
 
@@ -175,6 +187,18 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 SensorStateClass.MEASUREMENT,
             )
         )
+        # Device Info sensor (diagnostic)
+        entities.append(
+            GoodHomeSensor(
+                coordinator,
+                device,
+                "device_info",
+                "Device Info",
+                None,
+                None,
+                None,
+            )
+        )
     
     async_add_entities(entities, True)
 
@@ -245,6 +269,11 @@ class GoodHomeSensor(CoordinatorEntity, SensorEntity):
                 return state.get("comfTemp")
             elif self._sensor_type == "duty_cycle":
                 return state.get("dutyCycle")
+            elif self._sensor_type == "device_info":
+                # Retourner un résumé textuel
+                fw_ver = state.get("fwVer", "Unknown")
+                hw_ver = state.get("HwVer", "Unknown")
+                return f"FW: {fw_ver} | HW: {hw_ver}"
         return None
     
     @property
@@ -253,6 +282,23 @@ class GoodHomeSensor(CoordinatorEntity, SensorEntity):
         device = self._get_device()
         if device and device.get("state"):
             state = device["state"]
+            
+            # Attributs spécifiques pour device_info sensor
+            if self._sensor_type == "device_info":
+                return {
+                    "firmware_version": state.get("fwVer"),
+                    "hardware_version": state.get("HwVer"),
+                    "code_name": state.get("codeName"),
+                    "room_name": state.get("roomName"),
+                    "fault_system": state.get("faultSystem"),
+                    "window_timeout": state.get("windowTimeOut"),
+                    "override_time": state.get("overrideTime"),
+                    "self_learning_days": state.get("selfLearningCountDay"),
+                    "connected": device.get("connected", False),
+                    "device_id": self._device_id,
+                }
+            
+            # Attributs généraux pour les autres sensors
             return {
                 "firmware_version": state.get("fwVer"),
                 "hardware_version": state.get("HwVer"),
