@@ -36,14 +36,7 @@ Intégration Home Assistant complète pour les radiateurs connectés **GoodHome*
 
 ### Via HACS (recommandé)
 
-1. Ouvrez HACS dans Home Assistant
-2. Allez dans "Intégrations"
-3. Cliquez sur les 3 points en haut à droite
-4. Sélectionnez "Dépôts personnalisés"
-5. Ajoutez l'URL : `https://github.com/K0n3k/Goodhome_HomeAssistant`
-6. Catégorie : "Integration"
-7. Recherchez "GoodHome" et installez-le
-8. Redémarrez Home Assistant
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=K0n3k&repository=Goodhome_HomeAssistant&category=integration)
 
 ### Installation manuelle
 
